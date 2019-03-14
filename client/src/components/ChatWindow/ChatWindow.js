@@ -1,4 +1,5 @@
 import React from 'react';
+import SocketContext from '../../contexts/SocketContext';
 
 class ChatWindow extends React.Component {
     componentDidMount() {

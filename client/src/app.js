@@ -1,5 +1,5 @@
 import React from 'react';
-//import SocketContext from './contexts/SocketContext';
+import SocketContext from './contexts/SocketContext';
 import ChatWindow from './components/ChatWindow/ChatWindow';
 
 class App extends React.Component {
