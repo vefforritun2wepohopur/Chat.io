@@ -5,17 +5,23 @@ import SocketContext from '../../contexts/SocketContext';
 class CreateUser extends React.Component {
 componentDidCatch() {
   const { socket } = this.context;
+<<<<<<< HEAD
   socket.on('adduser', username => {
     const { username } = this.state;
     this.setState({ username});
+=======
+  socket.on('userName', userName => {
+    const { userNames } = this.state;
+    this.setState({ userNames: [ ...userNames, userName]});
+>>>>>>> 25519482e51d2da4aae0be9f964ffdfb94fd04ea
   });
 }
 
 constructor(props) {
   super(props);
   this.state ={
-    usernames: [], /*All the usernames currently taken */
-    username: '' /* current username */
+    userNames: [], /*All the usernames currently taken */
+    userName: '' /* current username */
   }
 }
 
@@ -34,8 +40,15 @@ handleRegister(userName) {
   if (!isUsernameAvailable(userName)) {
     return callback('user is not available');
   }
+<<<<<<< HEAD
   else(componentDidCatch);
   this.setState({ username: e.target.value});
+=======
+  else {
+    userNames.push(userName);
+    componentDidCatch();
+  }
+>>>>>>> 25519482e51d2da4aae0be9f964ffdfb94fd04ea
 }
 
 }
@@ -43,7 +56,17 @@ handleRegister(userName) {
 
 
 /*IsUsernameAvailable function returns boolean */
-
+isUsernameAvailable(userName){
+  var length = usernames.length;
+  for (var i = 0; i < length; i++) {
+    if(userName == usernames[i]) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+}
 
 CreateUser.contextType = SocketContext;
 
