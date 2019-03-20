@@ -19,6 +19,19 @@ class ChatWindow extends React.Component {
     sendMessage(message) {
         const { socket } = this.context;
         if (message === '') { return false; }
+        var msg = data.trim();
+        /* whisper skv. þessu myndbandi https://www.youtube.com/watch?v=k8o8-Q_-Qfk
+        else if (msg.substr(0,3) === '/w '){
+            var ind = msg.indexOf(' ');
+            if(ind !== -1){
+                var name = msg.substring(0, ind);
+                var msg = msg.substring(ind + 1);
+                if(name in users){
+                    users[name].emit('message', {msg: data, name: socket.name});
+                    console.log('whisper!');
+                }
+            }*/
+        }
         socket.emit('message', message);
         this.setState({ message: '' });
     }

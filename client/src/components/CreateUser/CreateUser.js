@@ -5,15 +5,9 @@ import SocketContext from '../../contexts/SocketContext';
 class CreateUser extends React.Component {
 componentDidCatch() {
   const { socket } = this.context;
-<<<<<<< HEAD
-  socket.on('adduser', username => {
-    const { username } = this.state;
-    this.setState({ username});
-=======
   socket.on('userName', userName => {
     const { userNames } = this.state;
     this.setState({ userNames: [ ...userNames, userName]});
->>>>>>> 25519482e51d2da4aae0be9f964ffdfb94fd04ea
   });
 }
 
