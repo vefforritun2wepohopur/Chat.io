@@ -5,9 +5,9 @@ import SocketContext from '../../contexts/SocketContext';
 class CreateUser extends React.Component {
 componentDidCatch() {
   const { socket } = this.context;
-  socket.on('username', username => {
-    const { usernames } = this.state;
-    this.setState({ usernames: [ ...usernames, username]});
+  socket.on('adduser', username => {
+    const { username } = this.state;
+    this.setState({ username});
   });
 }
 
@@ -23,8 +23,8 @@ render() {
   return (
     <div className="name-window">
       <div className="input-container">
-        <input type="text" value={ userName } onChange={e => this.setState({ userName: e.target.value })} placeholder="Enter your username here..." />
-        <button type="button" onClick={() => this.handleRegister(userName)}>Ok!</button>
+        <input type="text" value={ username } onChange={e => this.setState({ username: e.target.value })} placeholder="Enter your username here..." />
+        <button type="button" onClick={() => this.handleRegister(username)}>Ok!</button>
       </div>
     </div>
   )
@@ -35,6 +35,7 @@ handleRegister(userName) {
     return callback('user is not available');
   }
   else(componentDidCatch);
+  this.setState({ username: e.target.value});
 }
 
 }
