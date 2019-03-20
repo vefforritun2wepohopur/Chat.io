@@ -19,10 +19,22 @@ constructor(props) {
   }
 }
 
-handleRegister(userName, callback) {
+render() {
+  return (
+    <div className="name-window">
+      <div className="input-container">
+        <input type="text" value={ userName } onChange={e => this.setState({ userName: e.target.value })} placeholder="Enter your username here..." />
+        <button type="button" onClick={() => this.handleRegister(userName)}>Ok!</button>
+      </div>
+    </div>
+  )
+}
+/*tók callback sem parameter, óþarfi? */
+handleRegister(userName) {
   if (!isUsernameAvailable(userName)) {
     return callback('user is not available');
   }
+  else(componentDidCatch);
 }
 
 }
