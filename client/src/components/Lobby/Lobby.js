@@ -35,6 +35,7 @@ class Lobby extends React.Component {
             <div className="lobby-window">
                     <p>Lobby</p>
                     <CreateUser socket={socket} setUser={this.user}/>
+                    <CreateUser.currentUser username = { username } />
                     <ListRooms/>
             </div>
          

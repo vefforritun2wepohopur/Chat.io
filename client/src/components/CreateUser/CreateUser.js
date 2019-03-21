@@ -1,7 +1,7 @@
 import React from 'react';
 //import SocketContext from '../../contexts/SocketContext';
 import { socket } from '../../services/socketService';
-
+import ListRooms from '../../components/ListRooms/ListRooms';
 
 /* CreateUser og constructor alveg eins og chatwindow */
   class CreateUser extends React.Component {
@@ -25,7 +25,7 @@ import { socket } from '../../services/socketService';
          console.log("Name is free");
       }
       else{
-        console.log("Name is not free");
+         console.log("Name is not free");
       }
   });
 
@@ -34,15 +34,28 @@ import { socket } from '../../services/socketService';
 
   
 render() {	
-      const { username, users } = this.state
+      //const { username, users } = this.state
+      const { username } = this.props;
       return (
           <div className="login">
+          <p>Create username</p>
           <input type="text" id="username" value={ username } onChange={e => this.setState({ username: e.target.value })} placeholder="Please choose your username: " />
           <button type="button" onClick={() => this.sendUserName(username)}>Send</button>
-          <label for="username" class="control-label">Nick-name</label>
-
+          <br/>
+          <p>Currently logged in as: {this.state.username}</p>
+          
           </div>
+         
          );
   }
 };
+
+
+CreateUser.currentUser = props => (
+  
+  <div className="currentUser"> 
+   <p>{props.username}</p>
+  </div>
+);
+
 export default CreateUser;
