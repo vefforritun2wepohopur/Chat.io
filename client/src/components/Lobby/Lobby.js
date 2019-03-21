@@ -1,31 +1,46 @@
 import React from 'react';
-import SocketContext from '../../contexts/SocketContext';
+//import SocketContext from '../../contexts/SocketContext';
 import CreateUser from '../../components/CreateUser/CreateUser';
+import { socket } from '../../services/socketService';
 class Lobby extends React.Component {
 
     componentDidMount() {
-        const { socket } = this.context;
-        socket.io.on('connection', room => {
-            const { lobby } = this.state;
+        console.log(socket);
+        socket.io.on('connection', () => {
+            console.log("Connected");
         });
+        
     }
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            room:'Lobby'
+        };
+    }
+    
+	setUser = (user)=>{
+		const { socket } = this.state
+		socket.emit("connection", user);
+		this.setState({user})
+	}
+
     render() {
-        const { users } = this.props;
-        const { rooms } = this.props;
+        const{username, room} =  this.state
+        const { user } = this.props;
+        
         return (
             <div className="lobby-window">
                     <p>Lobby</p>
-                    <CreateUser/>
+                    <CreateUser socket={socket} setUser={this.user}/>
             </div>
-        
-           
+         
            
         );
     }
 
 };
 
-Lobby.contextType = SocketContext;
 
 export default Lobby;

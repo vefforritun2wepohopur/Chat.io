@@ -1,5 +1,5 @@
 import React from 'react';
-import SocketContext from '../../contexts/SocketContext';
+import { socket } from '../../services/socketService';
 
 class ChatWindow extends React.Component {
     componentDidMount() {
@@ -63,6 +63,6 @@ ChatWindow.Users = props => (
     </div>
 );
 
-ChatWindow.contextType = SocketContext;
+
 
 export default ChatWindow;

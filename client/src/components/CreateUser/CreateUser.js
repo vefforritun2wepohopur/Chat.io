@@ -1,56 +1,49 @@
 import React from 'react';
-import SocketContext from '../../contexts/SocketContext';
+//import SocketContext from '../../contexts/SocketContext';
+import { socket } from '../../services/socketService';
+
 
 /* CreateUser og constructor alveg eins og chatwindow */
-class CreateUser extends React.Component {
-componentDidMatch() {
-  const { socket } = this.context;
-  socket.on('adduser', users => {
-      console.log(users);
-      this._populateUserList(users);
-  });
-}
-
-_populateUserList(users){
-  this.setState({
-    users: users.map((u, idx) => `User ${idx + 1}`)
-  });
-}
-
-constructor(props) {
-  super(props);
-  this.state ={
-    users: [], /*All the usernames currently taken */
-    userName: '' /* current username */
+  class CreateUser extends React.Component {
+    componentDidMount() {
+    console.log(socket);
+  
   }
-}
 
+  constructor(props){
+    super(props);
+    this.state = {
+      username: ' ',
+      room: 'lobby'
+    };
+  }
 
+  registerUser(param){
+    const{username, room} =  this.state;
+		socket.emit('adduser', username, this.checkUsername);
+	
+  }
 
-render() {
+  setUsername = ({username, isRegistered})=>{
+	
+    if(isRegistered)
+    {
+      console.log("Username is taken");
+    }
+    else
+    {
+      this.props.setUsername(username);
+    }
+  }
   
-  const { userName } = this.state;
-  return (
-    <div className="name-window">
-      <div className="input-container">
-        <input type="text" value={ userName } onChange={e => this.setState({ userName: e.target.value })} placeholder="Enter your username here..." />
-        <button type="button" onClick={() => this.handleRegister(userName)}>Ok!</button>
-      </div>
-    </div>
-  )
-}
-/*tók callback sem parameter, óþarfi? */
-handleRegister(userName) {
-  const { socket } = this.context;
-  socket.emit('adduser', this.userName);
-  this.setState({ userName: this.userName });
-  
-}
-
-
-
+render() {	
+      const { username, users } = this.state
+      return (
+          <div className="login">
+         <input type="text" value={ username } onChange={e => this.setState({ username: e.target.value })} placeholder="Enter your message here..." />
+          <button type="button" onClick={() => this.registerUser(username)}>Send</button>
+          </div>
+         );
+  }
 };
-
-CreateUser.contextType = SocketContext;
-
 export default CreateUser;
