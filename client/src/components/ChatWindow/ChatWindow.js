@@ -16,12 +16,14 @@ class ChatWindow extends React.Component {
             message: '' /* Current message */
         };
     }
+    
     sendMessage(message) {
         const { socket } = this.context;
         if (message === '') { return false; }
        
         var msg = data.trim(); //Deletes whitespace before and after message
         /* whisper skv. þessu myndbandi https://www.youtube.com/watch?v=k8o8-Q_-Qfk */ 
+       
         if (msg.substr(0,3) === '/w '){
             msg = msg.substr(3);
             var ind = msg.indexOf(' ');
@@ -45,7 +47,7 @@ class ChatWindow extends React.Component {
         //socket.emit('message', message);
         this.setState({ message: '' });
         }
-    }
+}  
 
     render() {
         const { users } = this.props;

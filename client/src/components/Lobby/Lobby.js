@@ -1,6 +1,7 @@
 import React from 'react';
 //import SocketContext from '../../contexts/SocketContext';
 import CreateUser from '../../components/CreateUser/CreateUser';
+import ListRooms from '../../components/ListRooms/ListRooms';
 import { socket } from '../../services/socketService';
 class Lobby extends React.Component {
 
@@ -34,6 +35,7 @@ class Lobby extends React.Component {
             <div className="lobby-window">
                     <p>Lobby</p>
                     <CreateUser socket={socket} setUser={this.user}/>
+                    <ListRooms/>
             </div>
          
            

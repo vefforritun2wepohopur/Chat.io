@@ -18,30 +18,29 @@ import { socket } from '../../services/socketService';
     };
   }
 
-  registerUser(param){
-    const{username, room} =  this.state;
-		socket.emit('adduser', username, this.checkUsername);
-	
+  //Send the socket 
+  sendUserName = () => {
+    socket.emit('adduser', this.state.username, function(available){
+      if (available){
+         console.log("Name is free");
+      }
+      else{
+        console.log("Name is not free");
+      }
+  });
+
   }
 
-  setUsername = ({username, isRegistered})=>{
-	
-    if(isRegistered)
-    {
-      console.log("Username is taken");
-    }
-    else
-    {
-      this.props.setUsername(username);
-    }
-  }
+
   
 render() {	
       const { username, users } = this.state
       return (
           <div className="login">
-         <input type="text" value={ username } onChange={e => this.setState({ username: e.target.value })} placeholder="Enter your message here..." />
-          <button type="button" onClick={() => this.registerUser(username)}>Send</button>
+          <input type="text" id="username" value={ username } onChange={e => this.setState({ username: e.target.value })} placeholder="Please choose your username: " />
+          <button type="button" onClick={() => this.sendUserName(username)}>Send</button>
+          <label for="username" class="control-label">Nick-name</label>
+
           </div>
          );
   }
