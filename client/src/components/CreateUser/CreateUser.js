@@ -3,19 +3,19 @@ import SocketContext from '../../contexts/SocketContext';
 
 /* CreateUser og constructor alveg eins og chatwindow */
 class CreateUser extends React.Component {
-componentDidCatch() {
+componentDidMount() {
   const { socket } = this.context;
-  socket.on('userName', userName => {
-    const { userNames } = this.state;
-    this.setState({ userNames: [ ...userNames, userName]});
+  socket.on('adduser', username => {
+    const { username } = this.state;
+    this.setState({ username});
   });
 }
 
 constructor(props) {
   super(props);
   this.state ={
-    userNames: [], /*All the usernames currently taken */
-    userName: '' /* current username */
+    usernames: [], /*All the usernames currently taken */
+    username: '' /* current username */
   }
 }
 
@@ -30,19 +30,14 @@ render() {
   )
 }
 /*tók callback sem parameter, óþarfi? */
-handleRegister(userName) {
-  if (!isUsernameAvailable(userName)) {
+handleRegister(username) {
+  usernames.push(username);
+  /*if (!isUsernameAvailable(username)) {
     return callback('user is not available');
   }
-<<<<<<< HEAD
-  else(componentDidCatch);
-  this.setState({ username: e.target.value});
-=======
   else {
-    userNames.push(userName);
-    componentDidCatch();
-  }
->>>>>>> 25519482e51d2da4aae0be9f964ffdfb94fd04ea
+    usernames.push(username);
+  }*/
 }
 
 }
@@ -50,7 +45,7 @@ handleRegister(userName) {
 
 
 /*IsUsernameAvailable function returns boolean */
-isUsernameAvailable(userName){
+/*isUsernameAvailable(userName){
   var length = usernames.length;
   for (var i = 0; i < length; i++) {
     if(userName == usernames[i]) {
@@ -61,7 +56,7 @@ isUsernameAvailable(userName){
     }
   }
 }
-
+*/
 CreateUser.contextType = SocketContext;
 
 export default CreateUser;
