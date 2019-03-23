@@ -16,20 +16,21 @@ import { connect } from 'react-redux';
     this.state = {
       username: ' ',
       room: 'lobby',
-      usernames: [],
       redirect: false
     };
   }
 
   //Send the socket 
-  sendUserName = (username, room, usernames) => {
+  sendUserName = (username, room) => {
     socket.emit('adduser', this.state.username, function(available){
       if (available){
          console.log("Name is free");
          console.log("logged in as:" + username);
          socket.emit('joinroom', {room: 'lobby'}, function(available){
          console.log('logged into: ' + room);
-         usernames.push(username);
+         socket.emit('users');
+      
+        // props.usernames.push(this.state.username,);
          
         });
 
@@ -40,6 +41,10 @@ import { connect } from 'react-redux';
       }
       
   });
+
+     socket.on('users', userList => {
+            this.setState({users: userList.map((u, idx) => 'Username')})
+        });   
 
   }
 
@@ -58,7 +63,8 @@ import { connect } from 'react-redux';
 
   
 render() {	
-    const { username, room, redirect, usernames} = this.state;
+    const { username, room, redirect} = this.state;
+   
     if(this.state.redirect === true)
     {
       return <Redirect to= '/lobby'/>;
@@ -69,7 +75,7 @@ render() {
           <div className="login">
           <p>Create username</p>
           <input type="text" id="username" value={ username } onChange={e => this.setState({ username: e.target.value })} placeholder="Please choose your username: " />
-          <button type="button" onClick={ () => { this.sendUserName(username, room, usernames); this.setState({ redirect: true }); this.sendToLobby();}}>Send</button>
+          <button type="button" onClick={ () => { this.sendUserName(username, room); this.setState({ redirect: true }); this.sendToLobby();}}>Send</button>
           <br/>
           <p>Currently logged in as: {this.state.username}</p>
           </div>

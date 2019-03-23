@@ -21,7 +21,9 @@ class ChatWindow extends React.Component {
         if (message === '') { return false; }
         socket.emit('sendmsg', {roomName:'lobby'}, this.state.message);
             console.log(this.state.message);
+           
         this.setState({ message: '' });
+       
        
 }  
 
@@ -56,14 +58,14 @@ ChatWindow.Title = () => (
 
 ChatWindow.Messages = props => (
     <div className="messages">
-       { props.messages.map(m => <div key = { m } className="user">{m}</div>)}
+       { props.messages.map(m => <div key = { m } className="message">{m}</div>)}
     </div>
 );
 
 
 ChatWindow.Users = props => (
     <div className="users">
-    { props.users.map(u => <div key = { u } className="user">{u}</div>)}
+    { props.users.map(u => <div key = { u } className="user">{ u }</div>)}
     </div>
 );
 

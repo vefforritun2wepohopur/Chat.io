@@ -8,12 +8,14 @@ class Lobby extends React.Component {
 
     componentDidMount() {
         console.log(socket);
+        
         socket.io.on('connection', () => {
             console.log("Connected");
         });
 
-        socket.on('users', userList => {
-            this.setState({users: userList.map((u, idx) => 'Username')})
+        socket.on('userlist', userList => {
+            this.setState({users: userList.map((u, idx) => '${u}')});
+            socket.emit('users');
         });        
     }
 
@@ -34,10 +36,8 @@ class Lobby extends React.Component {
         return (
             <div className="lobby-window">
                     <p>Lobby</p>
-                    <p>Currently logged in as: {this.state.username}</p>
                     <ChatWindow users={ users }/>
             </div>
-         
            
         );
     }

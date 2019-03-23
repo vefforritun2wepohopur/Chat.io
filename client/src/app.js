@@ -7,9 +7,9 @@ import Lobby from './components/Lobby/Lobby';
 
 class App extends React.Component {
     componentDidMount() {        
-        socket.on('userlist', userList =>{
-            this.setState({... this.state, users: userList});
-        })
+        socket.io.on('connection', () => {
+            console.log("Connected");
+        });    
     }
   
     constructor(props) {
