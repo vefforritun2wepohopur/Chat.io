@@ -3,8 +3,7 @@ import { socket } from '../../services/socketService';
 
 class ChatWindow extends React.Component {
     componentDidMount() {
-        const { socket } = this.context;
-        socket.on('message', message => {
+        socket.on('sendmsg', message => {
             const { messages } = this.state;
             this.setState({ messages: [ ...messages, message ] });
         });
@@ -18,41 +17,16 @@ class ChatWindow extends React.Component {
     }
     
     sendMessage(message) {
-        const { socket } = this.context;
+     
         if (message === '') { return false; }
-        
-        /*
-        var msg = data.trim(); //Deletes whitespace before and after message
-        /* whisper skv. þessu myndbandi https://www.youtube.com/watch?v=k8o8-Q_-Qfk */ 
-        /*
-        if (msg.substr(0,3) === '/w '){
-            msg = msg.substr(3);
-            var ind = msg.indexOf(' ');
-            if(ind !== -1) {
-                var name = msg.substring(0, ind);
-                var msg = msg.substring(ind + 1);
-                if(name in users) {
-                    users[name].emit('privatemsg', {msg: data, nick: socket.username}); //ekki viss hvort þetta virki hérna
-                    console.log('Whisper!');
-                }
-                else {
-                    console.log('Whisper Error! Enter a valid user')
-                }
-            }
-            else {
-            console.log('Whisper Error! Enter a message for the whisper');
-            }
-        }
-        else {
-            */
-        //socket.emit('message', {msg: data, nick: socket.username}); //svo að nickname birtist með message
-        socket.emit('message', message);
+        socket.emit('sendmsg', {roomName:'lobby'}, this.state.message);
+            console.log(this.state.message);
         this.setState({ message: '' });
-        //}
+       
 }  
 
     render() {
-        const { users } = this.props;
+        const { users, rooms } = this.props;
         const { messages, message } = this.state;
         return (
             <div className="chat-window">
@@ -82,14 +56,14 @@ ChatWindow.Title = () => (
 
 ChatWindow.Messages = props => (
     <div className="messages">
-        { props.messages.map(m => <div key={ m } className="message">{ m }</div>) }
+       { props.messages.map(m => <div key = { m } className="user">{m}</div>)}
     </div>
 );
 
 
 ChatWindow.Users = props => (
     <div className="users">
-        { props.users.map(u => <div key={ u } className="user">{ u }</div>) }
+    { props.users.map(u => <div key = { u } className="user">{u}</div>)}
     </div>
 );
 

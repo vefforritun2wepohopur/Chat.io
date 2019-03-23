@@ -19,7 +19,8 @@ class ListRooms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        roomlist: []
+        roomlist: [],
+        room: 'lobby'
     };
 }
 
@@ -27,10 +28,12 @@ class ListRooms extends React.Component {
   
   render() {
     const { roomlist } = this.state;
+    const { room } = this.state;
     return (
         <div className="container">
             <p>Listing all rooms</p>
-           
+            <ListRooms.listRooms roomlist={ roomlist } />
+            <p>Currently logged in: {this.state.room}</p>
         </div>
     );
 }
@@ -40,7 +43,8 @@ class ListRooms extends React.Component {
 
 ListRooms.listRooms = props => (
     <div className="rooms">
-        { props.rooms.map(r => <div key={ r } className="rooms">{ r }</div>) }
+        { props.roomlist.map(r => <div key={ r } className="rooms">{ r }</div>) }
+       
     </div>
 );
 export default ListRooms;

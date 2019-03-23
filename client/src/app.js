@@ -1,22 +1,36 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //import SocketContext from './contexts/SocketContext';
 import { socket } from './services/socketService';
-//import ChatWindow from './components/ChatWindow/ChatWindow';
+import CreateUser from './components/CreateUser/CreateUser';
 import Lobby from './components/Lobby/Lobby';
 
 class App extends React.Component {
-    componentDidMount() {
-        
+    componentDidMount() {        
+        socket.on('userlist', userList =>{
+            this.setState({... this.state, users: userList});
+        })
     }
   
     constructor(props) {
         super(props);
+        this.state = {
+            users: [],
+            rooms: []
+        };
     }
+   
     render() {
+        console.log(this.state.users);
         return (
-            <div className="container">
-                <Lobby/>
+            <Router>
+            <div className="app-container">
+                <Switch>
+                    <Route exact path = '/' component = { CreateUser } />
+                    <Route exact path = '/lobby' component = { Lobby } />
+                </Switch>
             </div>
+            </Router>
         );
     }
 };

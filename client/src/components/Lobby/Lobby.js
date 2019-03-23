@@ -1,7 +1,8 @@
 import React from 'react';
 //import SocketContext from '../../contexts/SocketContext';
 import CreateUser from '../../components/CreateUser/CreateUser';
-import ListRooms from '../../components/ListRooms/ListRooms';
+//import ListRooms from '../../components/ListRooms/ListRooms';
+import  ChatWindow from '../../components/ChatWindow/ChatWindow';
 import { socket } from '../../services/socketService';
 class Lobby extends React.Component {
 
@@ -10,33 +11,31 @@ class Lobby extends React.Component {
         socket.io.on('connection', () => {
             console.log("Connected");
         });
-        
+
+        socket.on('users', userList => {
+            this.setState({users: userList.map((u, idx) => 'Username')})
+        });        
     }
 
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            room:'Lobby'
+            username: ' ',
+            users: [],
+            topic:' ',
+    
         };
     }
-    
-	setUser = (user)=>{
-		const { socket } = this.state
-		socket.emit("connection", user);
-		this.setState({user})
-	}
+  
 
     render() {
-        const{username, room} =  this.state
-        const { user } = this.props;
-        
+        const {users, username} = this.state;
+        console.log("duude");
         return (
             <div className="lobby-window">
                     <p>Lobby</p>
-                    <CreateUser socket={socket} setUser={this.user}/>
-                    <CreateUser.currentUser username = { username } />
-                    <ListRooms/>
+                    <p>Currently logged in as: {this.state.username}</p>
+                    <ChatWindow users={ users }/>
             </div>
          
            
